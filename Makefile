@@ -2,7 +2,7 @@
 VERSION = 4
 PATCHLEVEL = 14
 SUBLEVEL = 355
-EXTRAVERSION = +5-Morpheus-TheDream-eater-04
+EXTRAVERSION = +5-Lunardream-Morpheus
 NAME = Petit Gorille
 
 # *DOCUMENTATION*
