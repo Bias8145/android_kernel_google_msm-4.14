@@ -2,7 +2,7 @@
 VERSION = 4
 PATCHLEVEL = 14
 SUBLEVEL = 355
-EXTRAVERSION = +5-Morpheus-legacy
+EXTRAVERSION = +5-Morpheus
 NAME = Petit Gorille
 
 # *DOCUMENTATION*
