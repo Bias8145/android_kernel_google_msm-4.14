@@ -2,7 +2,7 @@
 VERSION = 4
 PATCHLEVEL = 14
 SUBLEVEL = 355
-EXTRAVERSION = -Morpheus+
+EXTRAVERSION = -PararelLine-さユり+
 NAME = Petit Gorille
 
 # *DOCUMENTATION*
