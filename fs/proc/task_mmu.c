@@ -42,6 +42,7 @@ void task_mem(struct seq_file *m, struct mm_struct *mm)
 {
 	unsigned long text, lib, swap, anon, file, shmem;
 	unsigned long hiwater_vm, total_vm, hiwater_rss, total_rss;
+	unsigned long ptes, pmds;
 
 	anon = get_mm_counter(mm, MM_ANONPAGES);
 	file = get_mm_counter(mm, MM_FILEPAGES);
@@ -64,8 +65,8 @@ void task_mem(struct seq_file *m, struct mm_struct *mm)
 	text = (PAGE_ALIGN(mm->end_code) - (mm->start_code & PAGE_MASK)) >> 10;
 	lib = (mm->exec_vm << (PAGE_SHIFT-10)) - text;
 	swap = get_mm_counter(mm, MM_SWAPENTS);
-	ptes = PTRS_PER_PTE * sizeof(pte_t) * atomic_long_read(&mm->nr_ptes);
-	pmds = PTRS_PER_PMD * sizeof(pmd_t) * mm_nr_pmds(mm);
+	ptes = mm_pgtables_bytes(mm);
+	pmds = 0;
 	SEQ_PUT_DEC("VmPeak:\t", hiwater_vm);
 	SEQ_PUT_DEC(" kB\nVmSize:\t", total_vm);
 	SEQ_PUT_DEC(" kB\nVmLck:\t", mm->locked_vm);

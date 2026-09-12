@@ -1718,11 +1718,6 @@ static int __do_execve_file(int fd, struct filename *filename,
 			    struct user_arg_ptr argv,
 			    struct user_arg_ptr envp,
 			    int flags, struct file *file)
-
-static int do_execveat_common(int fd, struct filename *filename,
-			      struct user_arg_ptr argv,
-			      struct user_arg_ptr envp,
-			      int flags)
 {
 	char *pathbuf = NULL;
 	struct linux_binprm *bprm;
@@ -1883,6 +1878,14 @@ out_ret:
 	if (filename)
 		putname(filename);
 	return retval;
+}
+
+static int do_execveat_common(int fd, struct filename *filename,
+			      struct user_arg_ptr argv,
+			      struct user_arg_ptr envp,
+			      int flags)
+{
+	return __do_execve_file(fd, filename, argv, envp, flags, NULL);
 }
 
 #if defined(CONFIG_KSU)

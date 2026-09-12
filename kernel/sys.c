@@ -1182,11 +1182,11 @@ static int override_release(char __user *release, size_t len)
 	return ret;
 }
 
+#ifdef CONFIG_F2FS_REPORT_FAKE_KERNEL_VERSION
 static int override_version(struct new_utsname __user *name)
 {
 	int ret = 0;
 
-#ifdef CONFIG_F2FS_REPORT_FAKE_KERNEL_VERSION
 	if (strcmp(current->comm, "fsck.f2fs"))
 		return 0;
 
@@ -1197,10 +1197,10 @@ static int override_version(struct new_utsname __user *name)
 
 	ret = copy_to_user(name->version, CONFIG_F2FS_FAKE_KERNEL_VERSION,
 			   strlen(CONFIG_F2FS_FAKE_KERNEL_VERSION) + 1);
-#endif
 
 	return ret;
 }
+#endif
 
 #ifdef CONFIG_KSU_SUSFS_SPOOF_UNAME
 extern void susfs_spoof_uname(struct new_utsname* tmp);
@@ -1222,6 +1222,10 @@ SYSCALL_DEFINE1(newuname, struct new_utsname __user *, name)
 		return -EFAULT;
 	if (override_architecture(name))
 		return -EFAULT;
+#ifdef CONFIG_F2FS_REPORT_FAKE_KERNEL_VERSION
+	if (override_version(name))
+		return -EFAULT;
+#endif
 	return 0;
 }
 
